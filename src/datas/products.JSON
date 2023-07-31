@@ -1,0 +1,29 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+            "price": 109.95,
+            "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+            "category": "Grounded Coffee",
+            "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTtABvGLf52xnsHGg5GR01QxjvbhTzEzXx3wdzs-8yKdg-Evt8XGjBX1CfL63yFq-M9g_TUVVhxMvld0bZ-xkhvwlSCPvVpstAptjOQ2-6nynYtczh0bxNi&usqp=CAc",
+            "rating": {
+                "rate": 3.9,
+                "count": 120
+            }
+        },
+        {
+            "id": 2,
+            "title": "Mens Casual Premium Slim Fit T-Shirts ",
+            "price": 22.3,
+            "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+            "category": "Coffee Beans",
+            "image": "https://shoplineimg.com/58a2887559d52406350002fc/64394d921edb27001ad7297d/800x.webp?source_format=jpg",
+            "rating": {
+                "rate": 4.1,
+                "count": 259
+            }
+        }
+      ],
+      "error": null
+    }

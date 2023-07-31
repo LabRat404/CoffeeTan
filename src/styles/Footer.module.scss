@@ -1,0 +1,19 @@
+@import "styles/_variables.scss";
+
+.footer {
+  padding: 0 1rem;
+  background-color: $silver;
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+  p {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    font-weight: 500;
+    gap: 10px;
+    text-transform: uppercase;
+  }
+}
