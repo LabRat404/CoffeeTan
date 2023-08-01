@@ -9,7 +9,7 @@ const Card = ({ product }) => {
     <div className={styles.card}>
       <Link to={`/product/${slugify(product.title, { lower: true, strict: true })}-${product.id}`} className={styles.content}>
         <div className={styles.img}>
-          <img src={product.image} alt="" />
+          <img src={product.image[0]} alt="" />
         </div>
         <div className={styles.info}>
           <div className={styles.title}>

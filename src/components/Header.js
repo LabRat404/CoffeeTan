@@ -40,7 +40,7 @@ const Header = () => {
               <Link to="/viewProducts"  className={styles.a}>
                 All Products
               </Link>
-              <ul className={styles.subMenu}>{result.data ? result.data.map((cat, index) => <CategoryItem data={cat} key={index} />) : <div>{result.error}</div>}</ul>
+              {/* <ul className={styles.subMenu}>{result.data ? result.data.map((cat, index) => <CategoryItem data={cat} key={index} />) : <div>{result.error}</div>}</ul> */}
             </li>
             <li>
               <Link

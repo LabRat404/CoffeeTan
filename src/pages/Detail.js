@@ -7,7 +7,17 @@ import useMakeRequest from "hooks/useMakeRequest";
 import { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "styles/Detail.module.scss";
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
 
+const divStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  height: '280px'
+};
 const Detail = () => {
   const { slug } = useParams();
   let id = slug.split("-");
@@ -55,9 +65,20 @@ const Detail = () => {
       ) : (
         <div className={styles.content}>
           <div className={styles.top}>
-            <div className={styles.img}>
-              <img src={result.data.image} alt="" />
-            </div>
+          <div className={styles.img}>
+  {result.data.image.length > 1 ? (
+    <Slide>
+      {result.data.image.map((slideImage, index) => (
+        <div key={index}>
+          <div style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}></div>
+        </div>
+      ))}
+    </Slide>
+  ) : (
+    <img src={result.data.image[0]} />
+  )}
+</div>
+
             <div className={styles.info}>
               <div className={styles.title}>
                 <Title txt={result.data.title} transform="uppercase" size={20} />

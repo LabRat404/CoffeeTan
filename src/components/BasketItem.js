@@ -21,7 +21,7 @@ const BasketItem = ({ data }) => {
   return (
     <div className={styles.item}>
       <div className={styles.img}>
-        <img src={data.image} alt="" />
+        <img src={data.image[0]} alt="" />
       </div>
       <div className={styles.detail}>
         <div className={styles.title}>
