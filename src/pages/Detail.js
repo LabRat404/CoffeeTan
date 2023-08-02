@@ -14,9 +14,10 @@ const divStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundSize: 'cover',
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
-  height: '280px'
+  height: '280px',
 };
 const Detail = () => {
   const { slug } = useParams();
@@ -24,7 +25,7 @@ const Detail = () => {
   id = id[id.length - 1];
 
   //const result = useMakeRequest(`https://fakestoreapi.com/products/${id}`);
-  const result = useMakeRequest(`http://localhost:3001/api/getProductSingle/${id}`);
+  const result = useMakeRequest(`http://172.20.10.3:3001/api/getProductSingle/${id}`);
 
   const { basketItems } = useContext(BasketContext);
 
@@ -67,7 +68,7 @@ const Detail = () => {
           <div className={styles.top}>
           <div className={styles.img}>
   {result.data.image.length > 1 ? (
-    <Slide>
+    <Slide transitionDuration={500} duration={10000}>
       {result.data.image.map((slideImage, index) => (
         <div key={index}>
           <div style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}></div>

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import loadings from 'images/coffee_load.gif';
 const Category = () => {
   const { slug } = useParams();
-  var result = useMakeRequest(`http://localhost:3001/api/CategoryProductGet/${slug}`);
+  var result = useMakeRequest(`http://172.20.10.3:3001/api/CategoryProductGet/${slug}`);
 
   if (!result.data) {
     return (

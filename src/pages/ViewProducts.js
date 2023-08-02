@@ -5,7 +5,7 @@ import useMakeRequest from "hooks/useMakeRequest";
 import json from "/Users/tangjaii/Downloads/CoffeeTan/src/datas/products.JSON"
 import loadings from 'images/coffee_load.gif';
 const ViewProducts = () => {
-  var result = useMakeRequest("http://localhost:3001/api/getProducts");
+  var result = useMakeRequest("http://172.20.10.3:3001/api/getProducts");
 
   if (!result.data) {
     if (result.error) {
@@ -42,7 +42,7 @@ const ViewProducts = () => {
             )}
           </div>
         </div>
-      </section>
+      </section> 
     );
   }
 };

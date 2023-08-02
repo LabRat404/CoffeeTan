@@ -9,7 +9,7 @@ const Footer = () => {
         <GetIcon icon="BsInstagram" size={22} color="#da0037" /> <a href="https://instagram.com/tantan091.jpg?igshid=OGQ5ZDc2ODk2ZA==">Instagram</a>
       </p>
       <p>
-        <GetIcon icon="BsTelephone" size={22} color="#da0037" /> +852 55793330
+        <GetIcon icon="BsTelephone" size={22} color="#da0037" /> Tan +852 55793330
       </p>
     </footer>
 

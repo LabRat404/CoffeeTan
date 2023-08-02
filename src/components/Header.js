@@ -9,7 +9,7 @@ import { BasketContext } from "context/BasketContext";
 import { useContext } from "react";
 
 const Header = () => {
-  var result = useMakeRequest("http://localhost:3001/api/getCategory");
+  var result = useMakeRequest("http://172.20.10.3:3001/api/getCategory");
   const { basketItems, setBasketIsOpen } = useContext(BasketContext);
 
 

@@ -4,13 +4,11 @@ import MobileCategories from "components/MobileCategories";
 import { useState } from "react";
 import MobileBasket from "components/MobileBasket";
 import clsx from "clsx";
-import {Routes, Route, useNavigate} from 'react-router-dom';
-
 
 const MobileBottomNav = () => {
   const [currentComponent, setCurrentComponent] = useState("");
   const [navIsOpen, setNavIsOpen] = useState(false);
-  const navigate = useNavigate();
+
   return (
     <div className={clsx(styles.bottomNav, navIsOpen ? styles.fullHeight : styles.removeHeight)}>
       <div className={styles.content}>
@@ -29,7 +27,8 @@ const MobileBottomNav = () => {
         <button
           className={styles.navItem}
           onClick={() => {
-            navigate('/');
+            setCurrentComponent("");
+            setNavIsOpen(false);
           }}
         >
           <GetIcon icon="BsHouseFill" size={20} />
