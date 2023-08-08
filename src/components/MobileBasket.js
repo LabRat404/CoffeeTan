@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from "styles/MobileBasket.module.scss";
 import emptyCardImg from "images/basket.png";
 import BasketItem from "components/BasketItem";
@@ -7,7 +10,22 @@ import GetIcon from "components/GetIcon";
 import Title from "components/Title";
 
 const MobileBasket = () => {
-  const { basketItems, basketTotal: _basketTotal } = useContext(BasketContext);
+  const navigate = useNavigate();
+  const { basketItems, setBasketItems, basketTotal: _basketTotal } = useContext(BasketContext);
+
+  const handleOrderSubmit = () => {
+    // Perform order submission logic here
+    // ...
+
+    // Show success message
+    toast.success("Order submitted successfully!");
+
+    // Clear the basket
+    setBasketItems([]);
+
+    // Redirect to the home page
+    navigate('/');
+  };
 
   return (
     <div className={styles.mobileBasket}>
@@ -28,31 +46,31 @@ const MobileBasket = () => {
               </div>
             </div>
             <div className={styles.total}>
-                <Title txt="Contact Info" size={18} transform="uppercase" />
-                <GetIcon icon="BsPersonVcard" size={20} />
-              </div>
-              <div style={{ display: 'flex' }}>
-  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-    <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
-      Name:
-      <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-    </label>
-  </form>
-  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-    <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
-      Email:
-      <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-    </label>
-  </form>
-  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-    <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
-      Phone num:
-      <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-    </label>
-  </form>
-</div>
-            <button type="button" className={styles.confirmBtn}>
-              Confirm the basket
+              <Title txt="Contact Info" size={18} transform="uppercase" />
+              <GetIcon icon="BsPersonVcard" size={20} />
+            </div>
+            <div style={{ display: 'flex' }}>
+              <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
+                  Name:
+                  <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
+                </label>
+              </form>
+              <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
+                  Email:
+                  <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
+                </label>
+              </form>
+              <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <label style={{ fontSize: '0.7rem', marginBottom: '3px' }}>
+                  Phone num:
+                  <input type="text" name="name" style={{  padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
+                </label>
+              </form>
+            </div>
+            <button type="button" className={styles.confirmBtn} onClick={handleOrderSubmit}>
+              Confirm & Submit Order
             </button>
           </div>
         </>

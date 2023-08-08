@@ -1,4 +1,6 @@
+import { toast } from 'react-toastify';
 import styles from "styles/AddToBasketBtn.module.scss";
+import 'react-toastify/dist/ReactToastify.css';
 import { BasketContext } from "context/BasketContext";
 import { useContext } from "react";
 import GetIcon from "components/GetIcon";
@@ -27,6 +29,9 @@ const AddToBasketBtn = ({ data: product }) => {
     }
 
     setBasketTotal((oldTotal) => (oldTotal += product.price * (currentQuantity || 1)));
+
+    // Show success message
+    toast.success(`${product.title} added to basket!`);
   };
 
   return (
