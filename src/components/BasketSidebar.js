@@ -158,7 +158,7 @@ const BasketSidebar = () => {
                   className={styles.confirmBtn}
                   onClick={handleOrderSubmit}
                 >
-                  Confirm & Submit Order
+                  Confirm Cart
                 </button>
               </div>
             </>
