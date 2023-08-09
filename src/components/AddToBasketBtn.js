@@ -31,7 +31,13 @@ const AddToBasketBtn = ({ data: product }) => {
     setBasketTotal((oldTotal) => (oldTotal += product.price * (currentQuantity || 1)));
 
     // Show success message
-    toast.success(`${product.title} added to basket!`);
+
+    toast(` ${product.title} added to basket! 🛒 `, {
+      autoClose: 1600,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
   };
 
   return (

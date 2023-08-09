@@ -4,6 +4,7 @@ import MobileCategories from "components/MobileCategories";
 import { useState } from "react";
 import MobileBasket from "components/MobileBasket";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 const MobileBottomNav = () => {
   const [currentComponent, setCurrentComponent] = useState("");

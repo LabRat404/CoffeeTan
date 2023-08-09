@@ -28,7 +28,7 @@ const ViewProducts = () => {
           <div className={styles.row}>
             {result.data && (
               <div className={styles.title}>
-                <Title txt="all products Real" color="#171717" size={22} transform="uppercase" />
+                <Title txt="all products" color="#171717" size={22} transform="uppercase" />
               </div>
             )}
           </div>

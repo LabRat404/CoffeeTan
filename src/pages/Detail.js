@@ -1,3 +1,4 @@
+import 'react-slideshow-image/dist/styles.css'
 import AddToBasketBtn from "components/AddToBasketBtn";
 import GetIcon from "components/GetIcon";
 import Quantity from "components/Quantity";
@@ -8,7 +9,7 @@ import { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "styles/Detail.module.scss";
 import { Slide } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css'
+
 
 const divStyle = {
   display: 'flex',
@@ -68,7 +69,7 @@ const Detail = () => {
           <div className={styles.top}>
           <div className={styles.img}>
   {result.data.image.length > 1 ? (
-    <Slide transitionDuration={500} duration={10000}>
+    <Slide transitionDuration={500} duration={5000} >
       {result.data.image.map((slideImage, index) => (
         <div key={index}>
           <div style={{ ...divStyle, backgroundImage: `url(${slideImage})` }}></div>

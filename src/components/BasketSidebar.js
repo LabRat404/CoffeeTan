@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from "styles/BasketSidebar.module.scss";
@@ -11,11 +12,12 @@ import { useContext, useRef } from "react";
 import React, { useState, useEffect } from 'react';
 
 const BasketSidebar = () => {
-  const { basketIsOpen, setBasketIsOpen, basketItems, basketTotal: _basketTotal } = useContext(BasketContext);
+  const { basketIsOpen, setBasketItems, setBasketIsOpen, basketItems, setBasketTotal, basketTotal: _basketTotal } = useContext(BasketContext);
   const container = useRef();
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [popupTop, setPopupTop] = useState('50%');
   const [popupLeft, setPopupLeft] = useState('50%');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -28,11 +30,67 @@ const BasketSidebar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleFormSubmit = () => {
-    // Perform form submission logic
-
-    // Show success message
-    toast.success('Order submitted successfully!');
+  const handleOrderSubmit = () => {
+    const nameInput = document.querySelector('input[name="name"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    const phoneInput = document.querySelector('input[name="phone"]');
+  
+    const data = {
+      name: nameInput.value,
+      email: emailInput.value,
+      phone: phoneInput.value,
+      total_price: _basketTotal.toFixed(2),
+      basketItems: basketItems.map((item) => ({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+    };
+  
+    // Perform the form submission logic (e.g., send the data to the server)
+    // Use fetch or an HTTP library like axios for this
+    console.log(data);
+    // Example using fetch:
+    fetch('http://172.20.10.3:3001/api/OrderPost', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Clear the basket
+          setBasketIsOpen(false);
+          setBasketItems([]);
+          setBasketTotal(0);
+          // Show success message
+          toast('❤️ Order submitted successfully! Confirm email will be sent soon!', {
+            autoClose: 10000,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+  
+          // Navigate to the home page
+          navigate('/');
+        } else {
+          throw new Error('Failed to submit order, please try again later');
+        }
+      })
+      .catch((error) => {
+        console.error('Error submitting order:', error);
+        // Show error message
+        toast.error('Failed to submit order. Please try again later.', {
+          autoClose: 5000,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
   };
 
   return (
@@ -84,13 +142,13 @@ const BasketSidebar = () => {
                   <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                     <label style={{ fontSize: '0.7rem', marginBottom: '3px', marginTop: '3px' }}>
                       Email:
-                      <input type="text" name="name" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
+                      <input type="text" name="email" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
                     </label>
                   </form>
                   <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                     <label style={{ fontSize: '0.7rem', marginBottom: '3px', marginTop: '3px' }}>
                       country code+phone:
-                      <input type="text" name="name" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem',textAlign: 'left', width: '100%' }} />
+                      <input type="text"name="phone" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
                     </label>
                   </form>
                 </div>
@@ -98,7 +156,7 @@ const BasketSidebar = () => {
                 <button
                   type="button"
                   className={styles.confirmBtn}
-                  onClick={handleFormSubmit}
+                  onClick={handleOrderSubmit}
                 >
                   Confirm & Submit Order
                 </button>
@@ -107,23 +165,12 @@ const BasketSidebar = () => {
           ) : (
             <div className={styles.emptyBasket}>
               <img src={emptyCardImg} alt="Empty Basket" />
-              <p>Your basket is empty</p>
+              <Title txt="Your basket is empty!" size={18} transform="uppercase" />
+              <small>Add items to the basket to proceed.</small>
             </div>
           )}
         </div>
       </div>
-      {basketIsOpen && (
-        <div
-          className={styles.popup}
-          style={{ top: popupTop, left: popupLeft }}
-          onClick={() => setIsPopupOpen(false)}
-        >
-          <div className={styles.popupContent}>
-            <GetIcon icon="BsArrowRight" size={20} />
-            <p>Swipe Right to Open Basket</p>
-          </div>
-        </div>
-      )}
       <ToastContainer />
     </div>
   );

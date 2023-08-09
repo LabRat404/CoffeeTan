@@ -1,4 +1,5 @@
 import styles from "styles/Home.module.scss";
+import React, { useRef } from "react";
 import Card from "components/Card";
 import { Link } from "react-router-dom";
 import Title from "components/Title";
@@ -91,6 +92,11 @@ result = eval(json);
             Shop Now
               </Link></button>
       </section>
+      <section className={styles.intro} ref={aboutRef}>
+          <div className={styles.backgroundImage}></div>
+          <h2 className={styles.heading} handleAboutClick={scrollToAbout}>About Us</h2>
+          <p className={styles.text}> At OurCompany, we take pride in providing the finest quality coffee products to coffee enthusiasts worldwide. With a passion for sourcing the best coffee beans and powder, we offer a diverse range of flavors and varieties to suit every palate. Our commitment to excellence extends from the cultivation and roasting process to the packaging and delivery of our products. Whether you're a connoisseur or a casual coffee lover, we strive to deliver an exceptional coffee experience that awakens your senses. Join us on this flavorful journey and discover the richness and uniqueness of Vietnam coffee.</p>
+        </section>
     </div>
     );
   }
