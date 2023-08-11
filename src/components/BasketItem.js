@@ -4,9 +4,13 @@ import GetIcon from "components/GetIcon";
 import Quantity from "components/Quantity";
 import { BasketContext } from "context/BasketContext";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+
+import slugify from "slugify";
+
 
 const BasketItem = ({ data }) => {
-  const { basketItems, setBasketItems, setBasketTotal } = useContext(BasketContext);
+  const { basketItems, setBasketItems, setBasketTotal,setBasketIsOpen } = useContext(BasketContext);
 
   const removeItemFromBasket = () => {
     let arr = [...basketItems],
@@ -25,7 +29,11 @@ const BasketItem = ({ data }) => {
       </div>
       <div className={styles.detail}>
         <div className={styles.title}>
-          <Title txt={data.title} size={16} transform="capitalize" />
+
+          <Link to={`/product/${slugify(data.title, { lower: true, strict: true })}-${data.id}`} className={styles.title} onClick={() => setBasketIsOpen(false)}>
+          {data.title}
+          
+          </Link>
         </div>
         <div className={styles.priceContainer}>
           <small className={styles.singlePrice}>{data.price.toFixed(2)}</small>

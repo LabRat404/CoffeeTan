@@ -12,11 +12,19 @@ import { useContext, useRef } from "react";
 import React, { useState, useEffect } from 'react';
 
 const BasketSidebar = () => {
-  const { basketIsOpen, setBasketItems, setBasketIsOpen, basketItems, setBasketTotal, basketTotal: _basketTotal } = useContext(BasketContext);
+  const {
+    basketIsOpen,
+    setBasketItems,
+    setBasketIsOpen,
+    basketItems,
+    setBasketTotal,
+    basketTotal: _basketTotal
+  } = useContext(BasketContext);
   const container = useRef();
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [popupTop, setPopupTop] = useState('50%');
   const [popupLeft, setPopupLeft] = useState('50%');
+  const [isLoading, setIsLoading] = useState(false); // New loading state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,66 +39,13 @@ const BasketSidebar = () => {
   }, []);
 
   const handleOrderSubmit = () => {
-    const nameInput = document.querySelector('input[name="name"]');
-    const emailInput = document.querySelector('input[name="email"]');
-    const phoneInput = document.querySelector('input[name="phone"]');
-  
-    const data = {
-      name: nameInput.value,
-      email: emailInput.value,
-      phone: phoneInput.value,
-      total_price: _basketTotal.toFixed(2),
-      basketItems: basketItems.map((item) => ({
-        id: item.id,
-        title: item.title,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-    };
-  
-    // Perform the form submission logic (e.g., send the data to the server)
-    // Use fetch or an HTTP library like axios for this
-    console.log(data);
-    // Example using fetch:
-    fetch('http://172.20.10.3:3001/api/OrderPost', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Clear the basket
-          setBasketIsOpen(false);
-          setBasketItems([]);
-          setBasketTotal(0);
-          // Show success message
-          toast('❤️ Order submitted successfully! Confirm email will be sent soon!', {
-            autoClose: 10000,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          });
-  
-          // Navigate to the home page
-          navigate('/');
-        } else {
-          throw new Error('Failed to submit order, please try again later');
-        }
-      })
-      .catch((error) => {
-        console.error('Error submitting order:', error);
-        // Show error message
-        toast.error('Failed to submit order. Please try again later.', {
-          autoClose: 5000,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
-      });
+    setIsLoading(true); // Set loading state before navigating
+
+    setTimeout(() => {
+      setIsLoading(false); // Reset loading state after the timeout
+      navigate('/order-submission');
+      setBasketIsOpen(false);
+    }, 1000);
   };
 
   return (
@@ -123,42 +78,34 @@ const BasketSidebar = () => {
               </div>
               <div className={styles.basketTotal}>
                 <div className={styles.totalPrice}>
+                  <Title txt="Product HKD" size={17} transform="uppercase" />
+                  <div className={styles.price}>
+                    <span>{"$" + _basketTotal.toFixed(2)}</span>
+                  </div>
+                </div>
+                <div className={styles.totalPrice}>
+                  <Title txt="Tax" size={17} transform="uppercase" />
+                  <div className={styles.price}>
+                    <span>{"$" +0}</span>
+                  </div>
+                </div>
+                <div className={styles.totalPrice}>
                   <Title txt="Total HKD" size={17} transform="uppercase" />
                   <div className={styles.price}>
                     <span>{"$" + _basketTotal.toFixed(2)}</span>
                   </div>
                 </div>
-                <div className={styles.total}>
-                  <Title txt="Contact Info" size={17} transform="uppercase" />
-                  <GetIcon icon="BsPersonVcard" size={20} />
-                </div>
-                <div style={{ display: 'flex' }}>
-                  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <label style={{ fontSize: '0.7rem', marginBottom: '3px', marginTop: '3px' }}>
-                      Name:
-                      <input type="text" name="name" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-                    </label>
-                  </form>
-                  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <label style={{ fontSize: '0.7rem', marginBottom: '3px', marginTop: '3px' }}>
-                      Email:
-                      <input type="text" name="email" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-                    </label>
-                  </form>
-                  <form style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <label style={{ fontSize: '0.7rem', marginBottom: '3px', marginTop: '3px' }}>
-                      country code+phone:
-                      <input type="text"name="phone" style={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '0.7rem', textAlign: 'left', width: '100%' }} />
-                    </label>
-                  </form>
-                </div>
-                <small>Shipping outside Hong Kong may cost extra*</small>
                 <button
                   type="button"
                   className={styles.confirmBtn}
                   onClick={handleOrderSubmit}
+                  disabled={isLoading} // Disable the button when loading
                 >
-                  Confirm Cart
+                  {isLoading ? (
+                    <div className={styles.loadingIcon}>Loading...</div> // Show loading icon
+                  ) : (
+                    'Confirm Cart'
+                  )}
                 </button>
               </div>
             </>

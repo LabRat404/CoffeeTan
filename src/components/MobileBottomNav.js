@@ -3,6 +3,7 @@ import GetIcon from "components/GetIcon";
 import MobileCategories from "components/MobileCategories";
 import { useState } from "react";
 import MobileBasket from "components/MobileBasket";
+
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 
@@ -25,7 +26,8 @@ const MobileBottomNav = () => {
         })()}
       </div>
       <div className={styles.navContainer}>
-        <button
+        <Link
+          to="/"
           className={styles.navItem}
           onClick={() => {
             setCurrentComponent("");
@@ -33,7 +35,7 @@ const MobileBottomNav = () => {
           }}
         >
           <GetIcon icon="BsHouseFill" size={20} />
-        </button>
+        </Link>
         <button
           className={styles.navItem}
           onClick={() => {
@@ -43,7 +45,8 @@ const MobileBottomNav = () => {
         >
           <GetIcon icon="BsList" size={20} />
         </button>
-        <button
+        <Link
+          to="/mobile-basket"
           className={styles.navItem}
           onClick={() => {
             setCurrentComponent("basket");
@@ -51,7 +54,7 @@ const MobileBottomNav = () => {
           }}
         >
           <GetIcon icon="BsCartFill" size={20} />
-        </button>
+        </Link>
       </div>
     </div>
   );

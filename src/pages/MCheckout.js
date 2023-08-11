@@ -1,4 +1,4 @@
-import styles from 'styles/Checkout.module.scss';
+import styles from 'styles/mCheckout.module.scss';
 import Title from 'components/Title';
 import BasketSidebar from '../components/BasketSidebar';
 
@@ -12,7 +12,7 @@ import BasketItem from "components/BasketItem";
 import { BasketContext } from "context/BasketContext";
 import React, { useState, useEffect, useContext, useRef } from 'react';
 
-const Checkout = () => {
+const MCheckout = () => {
     const { basketIsOpen, setBasketItems, setBasketIsOpen, basketItems, setBasketTotal, basketTotal: _basketTotal } = useContext(BasketContext);
 
     const [isPopupOpen, setIsPopupOpen] = useState(true);
@@ -20,6 +20,8 @@ const Checkout = () => {
     const [popupLeft, setPopupLeft] = useState('50%');
     const navigate = useNavigate();
     const container = useRef();
+
+    const [currentComponent, setCurrentComponent] = useState("");
 
     useEffect(() => {
         const handleResize = () => {
@@ -108,7 +110,42 @@ const Checkout = () => {
     
     return (
         <div className={styles.checkoutContainer}>
+          
         <div className={styles.checkoutWrapper}>
+        <div className={styles.sidebar}>
+            <div className={styles.header}>
+              <Title txt="Current Basket" size={25} />
+              {basketItems.length > 1 ? (
+                <small>{basketItems.length} items in basket</small>
+              ) : (
+                <small>{basketItems.length} item in basket</small>
+              )}
+            </div>
+            {basketItems.length > 0 ? (
+              <>
+                <div className={styles.items}>
+                  {basketItems?.map((item, key) => (
+                    <BasketItem data={item} key={key} />
+                  ))}
+                </div>
+                <div className={styles.basketTotal}>
+                  <div className={styles.totalPrice}>
+
+                    <Title txt="Total HKD" size={20} transform="uppercase" />
+                    <div className={styles.price}>
+                      <span>{"$" + _basketTotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className={styles.emptyBasket}>
+                <img src={emptyCardImg} alt="Empty Basket" />
+                <Title txt="Your basket is empty!" size={17} transform="uppercase" />
+                <small>Add items to the basket to proceed.</small>
+              </div>
+            )}
+          </div>
           <div className={styles.content}>
             <h2 className={styles.sectionTitle}>Checkout &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;</h2>
             <div className={styles.section}>
@@ -129,7 +166,7 @@ const Checkout = () => {
               </div>
               <div className={styles.field}>
                 <label htmlFor="zipCode" className={styles.label}>
-                  Zip Code* (Enter 0000 if empty):
+                  Zip Code:
                 </label>
                 <input type="text" id="zipCode" name="zipCode" className={styles.input} />
               </div>
@@ -171,47 +208,11 @@ const Checkout = () => {
             </div>
             <button className={styles.button} onClick={handleOrderSubmit}>Place Order</button>
           </div>
-          <div className={styles.sidebar}>
-            <div className={styles.header}>
-              <Title txt="Current Basket" size={25} />
-              {basketItems.length > 1 ? (
-                <small>{basketItems.length} items in basket</small>
-              ) : (
-                <small>{basketItems.length} item in basket</small>
-              )}
-            </div>
-            {basketItems.length > 0 ? (
-              <>
-                <div className={styles.items}>
-                  {basketItems?.map((item, key) => (
-                    <BasketItem data={item} key={key} />
-                  ))}
-                </div>
-                <div className={styles.basketTotal}>
-                  <div className={styles.totalPrice}>
-       
-                    <Title txt="Total HKD" size={20} transform="uppercase" />
-                    <div className={styles.price}>
-                      <span>{"$" + _basketTotal.toFixed(2)}</span>
-                    </div>
-                    <small>Shipping overseas other than Hong Kong may cost extra charges*</small>
-                  </div>
-                  
-                </div>
-              
-              </>
-            ) : (
-              <div className={styles.emptyBasket}>
-                <img src={emptyCardImg} alt="Empty Basket" />
-                <Title txt="Your basket is empty!" size={17} transform="uppercase" />
-                <small>Add items to the basket to proceed.</small>
-              </div>
-            )}
-          </div>
+         
         </div>
         <ToastContainer />
       </div>
     );
 };
 
-export default Checkout;
+export default MCheckout;

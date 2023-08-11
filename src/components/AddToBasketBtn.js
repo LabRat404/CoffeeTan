@@ -34,6 +34,7 @@ const AddToBasketBtn = ({ data: product }) => {
 
     toast(` ${product.title} added to basket! 🛒 `, {
       autoClose: 1600,
+      pauseOnHover: false,
       draggable: true,
       progress: undefined,
       theme: 'light',

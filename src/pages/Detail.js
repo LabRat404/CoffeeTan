@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "styles/Detail.module.scss";
 import { Slide } from 'react-slideshow-image';
-
+import loadings from 'images/coffee_load.gif';
 
 const divStyle = {
   display: 'flex',
@@ -61,9 +61,9 @@ const Detail = () => {
   return (
     <section className={styles.detail}>
       {!result.data ? (
-        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <Title txt="Loading..." size={25} transform="uppercase" />
-        </div>
+        <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "30px" }}>
+    <img src={loadings} alt="Loading..." style={{ width: "900px", height: "900px" }} />
+      </div>
       ) : (
         <div className={styles.content}>
           <div className={styles.top}>

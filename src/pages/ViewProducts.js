@@ -17,7 +17,7 @@ const ViewProducts = () => {
     } else {
       return (
         <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "30px" }}>
-          <img src= {loadings} alt="Loading..." />
+      <img src={loadings} alt="Loading..." style={{ width: "900px", height: "900px" }} />
         </div>
       );
     }
