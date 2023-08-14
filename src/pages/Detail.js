@@ -62,7 +62,7 @@ const Detail = () => {
     <section className={styles.detail}>
       {!result.data ? (
         <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "30px" }}>
-    <img src={loadings} alt="Loading..." style={{ width: "900px", height: "900px" }} />
+    <img src={loadings} alt="Loading..." style={{ width: "1200px", height: "900px" }} />
       </div>
       ) : (
         <div className={styles.content}>

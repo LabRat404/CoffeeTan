@@ -32,7 +32,7 @@ const AddToBasketBtn = ({ data: product }) => {
 
     // Show success message
 
-    toast(` ${product.title} added to basket! 🛒 `, {
+    toast.success(` ${product.title} added to basket! 🛒 `, {
       autoClose: 1600,
       pauseOnHover: false,
       draggable: true,
