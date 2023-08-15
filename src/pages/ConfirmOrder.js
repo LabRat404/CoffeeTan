@@ -14,7 +14,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 
 const Checkout = () => {
     const { basketIsOpen, setBasketItems, setBasketIsOpen, basketItems, setBasketTotal, basketTotal: _basketTotal } = useContext(BasketContext);
-
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(true);
     const [popupTop, setPopupTop] = useState('50%');
     const [popupLeft, setPopupLeft] = useState('50%');
@@ -31,8 +31,8 @@ const Checkout = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    const handleOrderSubmit = () => {
-
+    const handleOrderSubmit = async () => {
+      setButtonDisabled(true);
         const nameInput = document.getElementById('name');
         const emailInput = document.getElementById('email');
         const phoneInput = document.getElementById('phone');
@@ -59,53 +59,72 @@ const Checkout = () => {
             quantity: item.quantity,
           })),
         };
-      
+        console.log(_basketTotal)
+        if(_basketTotal<1){
+          toast.error('Shop something first before placing orders!', {
+            autoClose: 5000,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+
+        }else{
+        const id = toast.loading("Submitting orders...")
         // Perform the form submission logic (e.g., send the data to the server)
         // Use fetch or an HTTP library like axios for this
         console.log(data);
         // Example using fetch:
-        fetch('http://172.20.10.3:3001/api/OrderPost', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if (response.ok) {
-              // Clear the basket
-              setBasketIsOpen(false);
-              setBasketItems([]);
-              setBasketTotal(0);
-              // Show success message
-              toast('❤️ Order submitted successfully! Confirm email will be sent soon! Our staff will contact you ASAP!', {
-                autoClose: 10000,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'light',
-              });
-      
-              // Navigate to the home page
-              navigate('/');
-            } else {
-              throw new Error('Failed to submit order, please try again later');
-            }
-          })
-          .catch((error) => {
-            console.error('Error submitting order:', error);
-            // Show error message
-            toast.error('Failed to submit order. Please fill in all the *required and try again later.', {
-              autoClose: 5000,
+        try {
+          
+          // Make the POST request to submit the order
+          const response = await fetch('http://172.20.10.3:3001/api/OrderPost', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+          
+          if (response.ok) {
+            // Clear the basket
+            setBasketIsOpen(false);
+            setBasketItems([]);
+            setBasketTotal(0);
+            // Show success message
+            toast.dismiss();
+            toast(' Order submitted successfully! Confirm email will be sent soon! Our staff will contact you ASAP!', {
+              autoClose: 10000,
+              icon: "❤️",
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
               theme: 'light',
             });
-          });
     
+            // Navigate to the home page
+            navigate('/');
+          } else {
+            throw new Error('Failed to submit order, please try again later');
+          }
+        } catch (error) {
+          console.error('Error submitting order:', error);
+          // Show error message
+          toast.dismiss();
+          toast.error('Failed to submit order. Please fill in all the *required or try again later.', {
+            autoClose: 5000,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        }
+    
+        // Enable the "Place Order" button for the next order
+        setButtonDisabled(false);
       };
     
+    }
     return (
         <div className={styles.checkoutContainer}>
         <div className={styles.checkoutWrapper}>
@@ -129,7 +148,7 @@ const Checkout = () => {
               </div>
               <div className={styles.field}>
                 <label htmlFor="zipCode" className={styles.label}>
-                  Zip Code* (Enter 0000 if empty):
+                  Zip Code:
                 </label>
                 <input type="text" id="zipCode" name="zipCode" className={styles.input} />
               </div>
@@ -169,7 +188,9 @@ const Checkout = () => {
                 <textarea id="notes" name="notes" className={styles.textarea}></textarea>
               </div>
             </div>
-            <button className={styles.button} onClick={handleOrderSubmit}>Place Order</button>
+            <button className={styles.button} onClick={handleOrderSubmit} disabled={isButtonDisabled}>
+  Place Order
+</button>
           </div>
           <div className={styles.sidebar}>
             <div className={styles.header}>
@@ -194,7 +215,7 @@ const Checkout = () => {
                     <div className={styles.price}>
                       <span>{"$" + _basketTotal.toFixed(2)}</span>
                     </div>
-                    <small>Shipping overseas other than Hong Kong may cost extra charges*</small>
+                    <small  style={{ paddingBottom: '20px' }} >Shipping overseas other than Hong Kong may cost extra charges*</small>
                   </div>
                   
                 </div>
@@ -204,7 +225,8 @@ const Checkout = () => {
               <div className={styles.emptyBasket}>
                 <img src={emptyCardImg} alt="Empty Basket" />
                 <Title txt="Your basket is empty!" size={17} transform="uppercase" />
-                <small>Add items to the basket to proceed.</small>
+       
+          <small style={{ paddingBottom: '20px' }}>Add items to the basket to proceed.</small>
               </div>
             )}
           </div>

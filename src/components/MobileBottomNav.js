@@ -26,6 +26,18 @@ const MobileBottomNav = () => {
         })()}
       </div>
       <div className={styles.navContainer}>
+       
+
+        <button
+          className={styles.navItem}
+          onClick={() => {
+            setCurrentComponent("categories");
+            setNavIsOpen((oldState) => !oldState);
+          }}
+        >
+          <GetIcon icon="BsList" size={20} />
+        </button>
+       
         <Link
           to="/"
           className={styles.navItem}
@@ -36,15 +48,7 @@ const MobileBottomNav = () => {
         >
           <GetIcon icon="BsHouseFill" size={20} />
         </Link>
-        <button
-          className={styles.navItem}
-          onClick={() => {
-            setCurrentComponent("categories");
-            setNavIsOpen((oldState) => !oldState);
-          }}
-        >
-          <GetIcon icon="BsList" size={20} />
-        </button>
+        
         <Link
           to="/mobile-basket"
           className={styles.navItem}
