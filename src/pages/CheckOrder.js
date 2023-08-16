@@ -87,7 +87,10 @@ useEffect(() => {
                         alt={item.title}
                         className={styles.productImage}
                       />
+
+                      
                     </Link>
+                  
                     <div className={styles.cardDetails}>
                       <h4>
                         <Link to={getProductLink(item.id)}>{item.title}</Link>
